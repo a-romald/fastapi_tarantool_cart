@@ -1,0 +1,34 @@
+services:
+
+  app:
+    build:
+      context: ./docker/python
+      dockerfile: Dockerfile
+    container_name: app
+    environment:
+      - TARANTOOL_HOST=tarantool
+      - TARANTOOL_PORT=3301     
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    restart: on-failure
+    depends_on:
+      - tarantool
+    deploy:
+      mode: replicated
+      replicas: 1
+  
+  tarantool:
+    build:
+      context: ./docker/tarantool
+      dockerfile: Dockerfile
+    container_name: tarantool
+    ports:
+      - "3301:3301"    
+    volumes:
+      - tarantool_data:/var/lib/tarantool
+
+
+volumes:
+  tarantool_data:
