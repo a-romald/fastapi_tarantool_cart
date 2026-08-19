@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     container_name: app
     environment:
-      - TARANTOOL_HOST=tarantool
+      - TARANTOOL_HOST=tarantool_db
       - TARANTOOL_PORT=3301     
     ports:
       - 8000:8000
@@ -23,7 +23,7 @@ services:
     build:
       context: ./docker/tarantool
       dockerfile: Dockerfile
-    container_name: tarantool
+    container_name: tarantool_db
     ports:
       - "3301:3301"    
     volumes:
